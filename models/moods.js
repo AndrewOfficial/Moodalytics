@@ -37,6 +37,7 @@ moodSchema.statics.Create = function (moodObject, callback) {
   newMood.save(function (err) {
     // In case of any error, return using the done method
     if (err) {
+      console.log("ERR1!", err);
       return callback(err);
     }
     // Picture save successful

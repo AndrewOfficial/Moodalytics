@@ -17,6 +17,7 @@ router.post('/moodInput', function(req, res, next){
   res.send("You've successfully posted to the server", req.body);
   moodCol.Create(req.body, function(err, newMood){
     console.log("newMood",newMood);
+    console.log("ERR2!", err);
   });
 });
 
