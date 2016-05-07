@@ -15,7 +15,7 @@ var moodSchema = new mongoose.Schema({
   sadness: {type: Number, required: true},
   anger: {type: Number, required: true},
   surprise: {type: Number, required: true},
-  name: {type:String}
+  timestamp: {type: String}
 });
 
 /**
@@ -29,8 +29,9 @@ moodSchema.statics.Create = function (moodObject, callback) {
     sadness: moodObject.sadness,
     anger: moodObject.anger,
     surprise: moodObject.surprise,
-    name: moodObject.name
+    timestamp: moodObject.timestamp
   });
+  console.log(newMood);
 
   // save the user
   newMood.save(function (err) {
@@ -38,7 +39,6 @@ moodSchema.statics.Create = function (moodObject, callback) {
     if (err) {
       return callback(err);
     }
-    console.log('saved mood in moods collection');
     // Picture save successful
     return callback(null, newMood);
   });
