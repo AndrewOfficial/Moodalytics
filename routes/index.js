@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 //var moodCol = require('../models/moods.js');
-var smileValues = [];
+var smileValues = [.2,.5,.8];
 var average = 0;
 var request = require('request');
 
@@ -11,8 +11,11 @@ router.get('/moodOutput', function(req, res, next) {
 });
 
 router.post('/moodInput', function(req, res, next){
-  smileValues.push(req.body.happiness);
-  res.send(req.body.happiness);
+  console.log("BODY.HAPPINESS",req.body.happiness);
+  var x = parseFloat(req.body.happiness);
+  console.log("SLEKJFLKJSEf",x);
+  smileValues.push(x);
+  console.log(smileValues);
 });
 
 var sendInterval = setInterval(function(){
@@ -42,6 +45,8 @@ function getAverage() {
       sum += smileValues[i];
     }
     average = '' + Math.floor((sum / i) * 256);
+
+    console.log("average", average);
   }
 }
 
