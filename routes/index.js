@@ -7,7 +7,8 @@ var request = require('request');
 
 var x = 0;
 
-router.get('/moodOutput', function(req, res, next) {
+router.get('/', function(req, res) {
+  res.render('index', { title: "MoodAnalytics"});
 });
 
 router.post('/moodInput', function(req, res, next){
