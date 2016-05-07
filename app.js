@@ -26,10 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 var mongoose = require( 'mongoose' );
 
 // Build the connection string
-var dbURI = process.env.HEROKU_MLAB_URI || 'mongodb://localhost:27017/moods';
+var dbURI = process.env.HEROKU_MLAB_URI;
 
 // Create the database connection
-mongoose.connect(dbURI);
+mongoose.connect(process.env.MONGODB_URI);
 
 // CONNECTION EVENTS
 // When successfully connected
