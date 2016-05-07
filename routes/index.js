@@ -17,6 +17,7 @@ router.post('/moodInput', function(req, res, next){
     console.log("AVERAGE", req.body);
     x++;
   }
+  res.send("You have successfully posted to the server");
 });
 
 var sendInterval = setInterval(function(){
