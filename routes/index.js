@@ -11,12 +11,8 @@ router.get('/moodOutput', function(req, res, next) {
 });
 
 router.post('/moodInput', function(req, res, next){
-  smileValues.push(req.body);
-  if (x == 0) {
-    console.log("AVERAGE", req.body);
-    x++;
-  }
-  res.send("You have successfully posted to the server", req.body);
+  smileValues.push(req.body.happiness);
+  res.send(req.body.happiness);
 });
 
 var sendInterval = setInterval(function(){
