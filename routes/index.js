@@ -5,8 +5,6 @@ var smileValues = [.2,.5,.8];
 var average = 0;
 var request = require('request');
 
-var x = 0;
-
 router.get('/', function(req, res) {
   res.render('index', { title: "MoodAnalytics"});
 });
