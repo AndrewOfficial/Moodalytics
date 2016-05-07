@@ -22,30 +22,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Bring Mongoose into the app
-var mongoose = require( 'mongoose' );
-
-// Build the connection string
-var dbURI = process.env.HEROKU_MLAB_URI;
-
-// Create the database connection
-mongoose.connect(process.env.MONGODB_URI);
-
-// CONNECTION EVENTS
-// When successfully connected
-mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open to ' + dbURI);
-});
-
-// If the connection throws an error
-mongoose.connection.on('error',function (err) {
-  console.log('Mongoose default connection error: ' + err);
-});
-
-// When the connection is disconnected
-mongoose.connection.on('disconnected', function () {
-  console.log('Mongoose default connection disconnected');
-});
+//// Bring Mongoose into the app
+//var mongoose = require( 'mongoose' );
+//
+//// Build the connection string
+//var dbURI = process.env.HEROKU_MLAB_URI;
+//
+//// Create the database connection
+//mongoose.connect(process.env.MONGODB_URI);
+//
+//// CONNECTION EVENTS
+//// When successfully connected
+//mongoose.connection.on('connected', function () {
+//  console.log('Mongoose default connection open to ' + dbURI);
+//});
+//
+//// If the connection throws an error
+//mongoose.connection.on('error',function (err) {
+//  console.log('Mongoose default connection error: ' + err);
+//});
+//
+//// When the connection is disconnected
+//mongoose.connection.on('disconnected', function () {
+//  console.log('Mongoose default connection disconnected');
+//});
 
 
 app.use('/', routes);

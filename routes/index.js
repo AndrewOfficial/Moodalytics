@@ -1,24 +1,54 @@
 var express = require('express');
 var router = express.Router();
-var moodCol = require('../models/moods.js');
+//var moodCol = require('../models/moods.js');
+var smileValues = [];
+var average = 0;
+var request = require('request');
+
+var x = 0;
 
 /* GET home page. */
 router.get('/moodOutput', function(req, res, next) {
-  moodCol.find({},function(err, docs){
-    console.log(docs);
-    res.send(docs);
-  })
 });
 
 router.post('/moodInput', function(req, res, next){
-  console.log("asdflkjsdf");
-  console.log(req.body);
-
-  res.send("You've successfully posted to the server", req.body);
-  moodCol.Create(req.body, function(err, newMood){
-    console.log("newMood",newMood);
-    console.log("ERR2!", err);
-  });
+  smileValues.push(req.body);
+  if (x == 0) {
+    console.log("AVERAGE", req.body);
+    x++;
+  }
 });
+
+var sendInterval = setInterval(function(){
+  getAverage();
+  request.post(
+    'https://api.particle.io/v1/devices/270018000d47343432313031/led?access_token=cf0bb3a3b303a068ac415a12d232b98fc5afe03b',
+    { json: { average: average } },
+    function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+      }
+    }
+  );
+}, 250);
+
+function getAverage() {
+  var sum = 0;
+  if (smileValues.length > 500){
+    smileValues.splice(0,400);
+  } else if (smileValues.length >= 100 && smileValues.length< 500) {
+    for (var i; i < 100; i++) {
+      sum += smileValues[i];
+    }
+    average = '' + Math.floor((sum / i) * 256);
+  } else {
+    var i = 0;
+    for (i; i < smileValues.length; i++) {
+      sum += smileValues[i];
+    }
+    average = '' + Math.floor((sum / i) * 256);
+  }
+}
+
+getAverage();
 
 module.exports = router;
