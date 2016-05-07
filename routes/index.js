@@ -10,9 +10,10 @@ router.get('/moodOutput', function(req, res, next) {
 
 router.post('/moodInput', function(req, res, next){
   console.log(req.body);
-  moodCol.create(req.body, function(err, newMood){
-    console.log("newMood",newMood);
-  });
+  res.send("You've successfully posted to the server");
+  //moodCol.create(req.body, function(err, newMood){
+  //  console.log("newMood",newMood);
+  //});
 });
 
 module.exports = router;
