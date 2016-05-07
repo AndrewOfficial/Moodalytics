@@ -7,7 +7,6 @@ var request = require('request');
 
 var x = 0;
 
-/* GET home page. */
 router.get('/moodOutput', function(req, res, next) {
 });
 
@@ -17,7 +16,7 @@ router.post('/moodInput', function(req, res, next){
     console.log("AVERAGE", req.body);
     x++;
   }
-  res.send("You have successfully posted to the server");
+  res.send("You have successfully posted to the server", req.body);
 });
 
 var sendInterval = setInterval(function(){
