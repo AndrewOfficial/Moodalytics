@@ -5,34 +5,31 @@
  * Module dependencies
  */
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
 
 /**
  * User schema
  */
 
 var moodSchema = new mongoose.Schema({
-  mood: {type: Object, required: true, index: {unique: true}}
+  happiness: {type: Number, required: true},
+  sadness: {type: Number, required: true},
+  anger: {type: Number, required: true},
+  surprise: {type: Number, required: true},
+  name: {type:String}
 });
-
-/**
- * Pre-save hooks
- */
-
-
-/**
- * Methods
- */
-
 
 /**
  * Statics
  */
-moodSchema.statics.Create = function (mood, callback) {
+moodSchema.statics.Create = function (moodObject, callback) {
   // create the Picture
   var Mood = mongoose.model('Mood', moodSchema);
   var newMood = new Mood({
-    mood: mood
+    happiness: moodObject.happiness,
+    sadness: moodObject.sadness,
+    anger: moodObject.anger,
+    surprise: moodObject.surprise,
+    name: moodObject.name
   });
 
   // save the user

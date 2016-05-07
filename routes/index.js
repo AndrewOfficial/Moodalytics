@@ -5,12 +5,14 @@ var randomNumber = Math.floor(Math.random() * 6);
 
 /* GET home page. */
 router.get('/moodOutput', function(req, res, next) {
-  res.send(randomNumber);
+  res.send({happiness:5});
 });
 
 router.post('/moodInput', function(req, res, next){
   console.log(req.body);
-  moodCol.create({happiness:.01,sadness:.9,anger:.4,surprise:.3});
+  moodCol.create(req.body, function(err, newMood){
+    console.log("newMood",newMood);
+  });
 });
 
 module.exports = router;
