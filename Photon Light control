@@ -1,0 +1,120 @@
+#include "application.h"
+#include "neopixel/neopixel.h"
+
+
+SYSTEM_MODE(AUTOMATIC);
+
+
+void colorWipe(uint32_t c, uint8_t wait);
+void colorAll(uint32_t c, uint8_t wait);
+
+// IMPORTANT: Set pixel COUNT, PIN and TYPE
+#define PIXEL_PIN D2
+#define PIXEL_COUNT 256
+#define PIXEL_TYPE WS2812B
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
+
+void setup()
+{
+  Spark.function("led",ledToggle);
+  strip.begin();
+  strip.show(); // Initialize all pixels to 'off'
+  
+}
+void loop()
+{
+ // rainbow(20);
+}
+
+void rainbow(uint8_t wait) {
+  uint16_t i, j;
+
+  for(j=0; j<256; j++) {
+    for(i=0; i<strip.numPixels(); i++) {
+      strip.setPixelColor(i, Wheel((i+j) & 255));
+    }
+    strip.show();
+    delay(wait);
+  }
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+  if(WheelPos < 85) {
+   return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+  } else if(WheelPos < 170) {
+   WheelPos -= 85;
+   return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  } else {
+   WheelPos -= 170;
+   return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+}
+
+
+
+int ledToggle(String command) {
+    /* Spark.functions always take a string as an argument and return an integer.
+    Since we can pass a string, it means that we can give the program commands on how the function should be used.
+    In this case, telling the function "on" will turn the LED on and telling it "off" will turn the LED off.
+    Then, the function returns a value to us to let us know what happened.
+    In this case, it will return 1 for the LEDs turning on, 0 for the LEDs turning off,
+    and -1 if we received a totally bogus command that didn't do anything to the LEDs.
+    */
+ 
+    float command2 = command.toFloat();
+    
+    float commandinverse = 255 - command2 ;
+    
+    
+    if (command2 <= 256) {
+        
+     
+        
+        // set all pixels to blank
+        colorAll(strip.Color(0, 0, 0), 0); 
+        
+        
+        // Set correct number of pixels to yellow
+        uint16_t i;    // initialize a counter variable
+    //loop through and change all colors to blank
+    
+    
+    for(i=256; i>commandinverse; i--) {
+    strip.setPixelColor(i, strip.Color(255, 255, 0));    // set pixel i to color 0 
+    }
+  strip.show();
+        //colorAll(strip.Color(255, 0, 255), 0);         
+        return 0;
+    }
+    else {
+        
+        colorAll(strip.Color(0, 0, 0), 0); 
+        
+        return -1;
+    }
+}
+
+
+
+void colorAll(uint32_t c, uint8_t wait) {
+  uint16_t i;
+
+  for(i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+  }
+  strip.show();
+  delay(wait);
+}
+
+
+
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(wait);
+  }
+}
